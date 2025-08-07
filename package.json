@@ -1,0 +1,31 @@
+{
+  "name": "nest-admin",
+  "version": "1.0.0",
+  "description": "Full-stack admin system with NestJS backend and Vue3 frontend",
+  "private": true,
+  "workspaces": [
+    "web/packages/*",
+    "web/",
+    "server/"
+  ],
+  "scripts": {
+    "dev": "pnpm --filter web dev & pnpm --filter server start:dev",
+    "dev:web": "pnpm --filter web dev",
+    "dev:server": "pnpm --filter server start:dev",
+    "build": "pnpm -r build",
+    "build:web": "pnpm --filter web build",
+    "build:server": "pnpm --filter server build",
+    "lint": "pnpm -r lint",
+    "test": "pnpm -r test",
+    "clean": "pnpm -r clean",
+    "install:all": "pnpm install"
+  },
+  "keywords": ["monorepo", "nestjs", "vue3", "admin", "typescript"],
+  "author": "",
+  "license": "MIT",
+  "packageManager": "pnpm@10.13.1",
+  "engines": {
+    "node": ">=18.12.0",
+    "pnpm": ">=8.7.0"
+  }
+}
