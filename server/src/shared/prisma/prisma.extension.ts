@@ -1,12 +1,3 @@
-/*
- * @Author: jiang.sheng 87789771@qq.com
- * @Date: 2024-04-25 19:09:21
- * @LastEditors: jiang.sheng 87789771@qq.com
- * @LastEditTime: 2025-05-04 23:45:29
- * @FilePath: /meimei-admin/src/shared/prisma/prisma.extension.ts
- * @Description: 自定义数据库方法
- *
- */
 import { Prisma, PrismaClient } from '@prisma/client';
 
 export const extendedPrismaClient = new PrismaClient().$extends({
@@ -26,7 +17,7 @@ export const extendedPrismaClient = new PrismaClient().$extends({
           context.count({ where: args.where }),
         ]);
         return { rows, total };
-      }
+      },
     },
   },
 });

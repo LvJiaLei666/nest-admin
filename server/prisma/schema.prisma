@@ -6,10 +6,91 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+enum Sex {
+  MALE
+  FEMALE
+}
+
+enum Status {
+  ACTIVE
+  INACTIVE
+}
+
+enum MenuType {
+  DIRECTORY
+  MENU
+  BUTTON
+}
+
+// 用户表
+model User {
+  id          String    @id @default(uuid())
+  userName    String    @unique
+  password    String
+  email       String    @unique
+  phone       String    @unique
+  avatar      String?
+  sex         Sex       @default(FEMALE) // 性别
+  status      Status    @default(ACTIVE) // 状态
+  sort        Int       @default(0) // 排序
+  token       String? // token
+  tags        String[]  @default([]) // 标签
+  city        String[]  @default([]) // 城市
+  address     String? // 地址
+  roleId      String? // 角色id
+  role        Role?     @relation(fields: [roleId], references: [id])
+  loginCount  Int       @default(0) // 登录次数
+  lastIp      String? // 最后登录ip
+  lastLoginAt DateTime? // 最后登录时间
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+// 角色表
+model Role {
+  id          String       @id @default(uuid()) // 角色id
+  name        String       @unique // 角色名称
+  code        String       @unique // 角色编码
+  description String? // 角色描述
+  sort        Int          @default(0) // 排序
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  users       User[]
+  permissions Permission[]
+}
+
+// 权限表
+model Permission {
+  id        String   @id @default(uuid()) // 主键
+  createdAt DateTime @default(now()) // 创建时间
+  roleId    String // 角色ID
+  role      Role     @relation(fields: [roleId], references: [id]) // 与Role的关联
+  menuId    String // 菜单ID
+  menu      Menu     @relation(fields: [menuId], references: [id]) // 与Menu的关联
+}
+
+model Menu {
+  id          String       @id @default(uuid()) // 主键
+  title       String // 菜单标题
+  type        MenuType // 菜单类型
+  parentId    String? // 父级ID
+  parent      Menu?  @relation(name: "MenuHierarchy", fields: [parentId], references: [id]) // 与父级菜单的关联
+  children    Menu[] @relation("MenuHierarchy") // 与子级菜单的关联
+  name        String // 菜单名称
+  path        String? // 菜单路径
+  component   String? // 组件路径
+  meta        Json? // 菜单元数据(JSON)
+  props       Json? // iframe页面参数(JSON)
+  sort        Int      @default(0) // 排序
+  permission  String?      @unique // 权限标识
+  permissions Permission[] // 与Permission的一对多关系
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
 }
