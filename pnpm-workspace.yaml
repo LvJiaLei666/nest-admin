@@ -1,4 +1,12 @@
 packages:
-  - "web/packages/*"
-  - "web/"
-  - "server/"
+  - web/packages/*
+  - web/
+  - server/
+
+onlyBuiltDependencies:
+  - '@nestjs/core'
+  - '@parcel/watcher'
+  - core-js
+  - esbuild
+  - unrs-resolver
+  - vue-demi
