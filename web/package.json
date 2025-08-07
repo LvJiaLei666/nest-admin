@@ -78,6 +78,8 @@
     "@soybeanjs/eslint-config": "1.4.4",
     "@types/node": "22.13.1",
     "@types/nprogress": "0.2.3",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
     "@unocss/eslint-config": "65.4.3",
     "@unocss/preset-icons": "65.4.3",
     "@unocss/preset-uno": "65.4.3",
